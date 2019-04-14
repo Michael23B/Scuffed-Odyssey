@@ -6,7 +6,7 @@ using UnityEngine;
 public class SteamworksManager : MonoBehaviour
 {
     private NetworkPlayer localPlayer;
-    private List<NetworkPlayer> clientPlayers;
+    private List<NetworkPlayer> clientPlayers = new List<NetworkPlayer>();
 
     void Start()
     {
