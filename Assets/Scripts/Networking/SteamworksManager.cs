@@ -1,18 +1,20 @@
-﻿using Facepunch.Steamworks;
+﻿using System.Collections.Generic;
+using System.Text;
+using Facepunch.Steamworks;
 using UnityEngine;
 
 public class SteamworksManager : MonoBehaviour
 {
+    private NetworkPlayer localPlayer;
+    private List<NetworkPlayer> clientPlayers;
+
     void Start()
     {
         DontDestroyOnLoad(this);
 
         Config.ForUnity(Application.platform.ToString());
 
-        if (Client.Instance == null)
-        {
-            new Client(480); // Create a new FacePunch.Steamworks.Client
-        }
+        new Client(480); // Create a new FacePunch.Steamworks.Client
 
         if (Client.Instance == null)
         {
@@ -23,27 +25,44 @@ public class SteamworksManager : MonoBehaviour
         // Setup callbacks
         Client.Instance.Lobby.OnLobbyCreated = (success) =>
         {
+            Debug.Log($"Lobby Created? {success}");
+            if (success)
+            {
+                // Create local player
+                if (!localPlayer)
+                {
+                    localPlayer = CreateNetworkPlayer(true, Client.Instance.SteamId);
+                }
+            }
         };
 
         Client.Instance.Lobby.OnLobbyJoined = (success) =>
         {
+            Debug.Log($"Lobby Joined? {success}");
             if (success)
             {
-                // TODO create a player and set it to local player
+                if (!localPlayer)
+                {
+                    localPlayer = CreateNetworkPlayer(true, Client.Instance.SteamId);
+                }
+
+                // Create a player for each other player in the lobby
+                foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
+                {
+                    if (memberId != Client.Instance.SteamId)
+                    {
+                        clientPlayers.Add(CreateNetworkPlayer(false, memberId));
+                    }
+                }
 
                 // Send a message to other players to create a player with my id
-
-                // Create a player for each other player in the lobby using their id
             }
-            else Debug.Log("Failed to join lobby");
         };
 
         Client.Instance.LobbyList.OnLobbiesUpdated = () =>
         {
-            Debug.Log("Lobbies updating");
             if (Client.Instance.LobbyList.Finished)
             {
-                Debug.Log("Lobbies finished updating");
                 Debug.Log($"Found {Client.Instance.LobbyList.Lobbies.Count} lobbies");
 
                 foreach (LobbyList.Lobby lobby in Client.Instance.LobbyList.Lobbies)
@@ -53,10 +72,31 @@ public class SteamworksManager : MonoBehaviour
             }
 
         };
+
+        Client.Instance.Networking.OnP2PData = (steamid, bytes, length, channel) =>
+        {
+            var str = Encoding.UTF8.GetString(bytes, 0, length);
+
+            var senderPlayer = clientPlayers.Find(player => player.PlayerId == steamid);
+
+            if (senderPlayer)
+            {
+                string[] data = str.Split('?');
+                float senderX = float.Parse(data[0]);
+                float senderY = float.Parse(data[1]);
+
+                senderPlayer.transform.position = new Vector3(senderX, senderY);
+            }
+
+            Debug.Log("Got: " + str);
+        };
+
+        Client.Instance.Networking.SetListenChannel(0, true);
     }
 
     public void CreateLobby()
     {
+        Client.Instance.Lobby.Leave();
         Client.Instance.Lobby.Create(Lobby.Type.Public, 10);
     }
 
@@ -64,8 +104,8 @@ public class SteamworksManager : MonoBehaviour
     {
         if (Client.Instance.LobbyList.Lobbies.Count > 0)
         {
-            Debug.Log($"Joining lobby: {Client.Instance.LobbyList.Lobbies[0].Name}");
-            Client.Instance.Lobby.Join(Client.Instance.LobbyList.Lobbies[0].LobbyID);
+            // Join the most recently created lobby
+            Client.Instance.Lobby.Join(Client.Instance.LobbyList.Lobbies[Client.Instance.LobbyList.Lobbies.Count - 1].LobbyID);
             return;
         }
         Debug.Log("No lobby to join");
@@ -74,6 +114,20 @@ public class SteamworksManager : MonoBehaviour
     public void FindLobbies()
     {
         Client.Instance.LobbyList.Refresh();
+    }
+
+    public void LeaveLobby()
+    {
+        Client.Instance.Lobby.Leave();
+        Debug.Log("Left Lobby");
+    }
+
+    private NetworkPlayer CreateNetworkPlayer(bool isLocalPlayer, ulong playerId)
+    {
+        GameObject player = Instantiate(FindObjectOfType<PrefabHelper>().PlayerPrefab);
+        NetworkPlayer networkPlayer = player.GetComponent<NetworkPlayer>();
+        networkPlayer.InitializePlayer(isLocalPlayer, playerId);
+        return networkPlayer;
     }
 
     private void OnDestroy()
