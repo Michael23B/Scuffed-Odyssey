@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Facepunch.Steamworks;
+﻿using Facepunch.Steamworks;
 using UnityEngine;
 
 public class SteamworksManager : MonoBehaviour
@@ -24,15 +23,19 @@ public class SteamworksManager : MonoBehaviour
         // Setup callbacks
         Client.Instance.Lobby.OnLobbyCreated = (success) =>
         {
-            Debug.Log("lobby created: " + Client.Instance.Lobby.CurrentLobby);
-            Debug.Log($"Owner: {Client.Instance.Lobby.Owner}");
-            Debug.Log($"Max Members: {Client.Instance.Lobby.MaxMembers}");
-            Debug.Log($"Num Members: {Client.Instance.Lobby.NumMembers}");
-            foreach (KeyValuePair<string, string> data in Client.Instance.Lobby.CurrentLobbyData.GetAllData())
+        };
+
+        Client.Instance.Lobby.OnLobbyJoined = (success) =>
+        {
+            if (success)
             {
-                Debug.Log($"{data.Key} {data.Value}");
+                // TODO create a player and set it to local player
+
+                // Send a message to other players to create a player with my id
+
+                // Create a player for each other player in the lobby using their id
             }
-//            Client.Instance.Lobby.Leave();
+            else Debug.Log("Failed to join lobby");
         };
 
         Client.Instance.LobbyList.OnLobbiesUpdated = () =>
@@ -75,17 +78,11 @@ public class SteamworksManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Client.Instance != null)
-        {
-            Client.Instance.Dispose();
-        }
+        Client.Instance?.Dispose();
     }
 
     void Update()
     {
-        if (Client.Instance != null)
-        {
-            Client.Instance.Update();
-        }
+        Client.Instance?.Update();
     }
 }
