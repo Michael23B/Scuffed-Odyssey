@@ -3,12 +3,13 @@
 public class NetworkPlayer : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour[] localPlayerScripts = null;
-    private bool isLocalPlayer;
-    private int playerId; // TODO may not be an int
+    public bool IsLocalPlayer { get; private set; }
+    public ulong PlayerId { get; private set; }
 
-    public void InitializePlayer(bool isLocalPlayer, int playerId)
+    public void InitializePlayer(bool isLocalPlayer, ulong playerId)
     {
-        this.isLocalPlayer = isLocalPlayer;
+        IsLocalPlayer = isLocalPlayer;
+        PlayerId = playerId;
 
         if (!isLocalPlayer)
         {
@@ -17,11 +18,5 @@ public class NetworkPlayer : MonoBehaviour
                 script.enabled = false;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
