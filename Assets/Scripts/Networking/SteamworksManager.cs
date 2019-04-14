@@ -6,7 +6,7 @@ using UnityEngine;
 public class SteamworksManager : MonoBehaviour
 {
     private NetworkPlayer localPlayer;
-    private List<NetworkPlayer> clientPlayers;
+    private List<NetworkPlayer> clientPlayers = new List<NetworkPlayer>();
 
     void Start()
     {
@@ -41,6 +41,8 @@ public class SteamworksManager : MonoBehaviour
             Debug.Log($"Lobby Joined? {success}");
             if (success)
             {
+                var data = Encoding.UTF8.GetBytes("spawn"); // Spawn packet
+
                 if (!localPlayer)
                 {
                     localPlayer = CreateNetworkPlayer(true, Client.Instance.SteamId);
@@ -52,6 +54,9 @@ public class SteamworksManager : MonoBehaviour
                     if (memberId != Client.Instance.SteamId)
                     {
                         clientPlayers.Add(CreateNetworkPlayer(false, memberId));
+
+                        // Send this player a packet to spawn a player for you on their screen
+                        Client.Instance.Networking.SendP2PPacket(memberId, data, data.Length);
                     }
                 }
 
@@ -76,6 +81,13 @@ public class SteamworksManager : MonoBehaviour
         Client.Instance.Networking.OnP2PData = (steamid, bytes, length, channel) =>
         {
             var str = Encoding.UTF8.GetString(bytes, 0, length);
+
+            // Spawn packet, create a NetworkPlayer for the new player
+            if (str == "spawn")
+            {
+                clientPlayers.Add(CreateNetworkPlayer(false, steamid));
+                return;
+            }
 
             var senderPlayer = clientPlayers.Find(player => player.PlayerId == steamid);
 
