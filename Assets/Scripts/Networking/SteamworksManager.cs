@@ -99,8 +99,6 @@ public class SteamworksManager : MonoBehaviour
 
                 senderPlayer.transform.position = new Vector3(senderX, senderY);
             }
-
-            Debug.Log("Got: " + str);
         };
 
         Client.Instance.Networking.SetListenChannel(0, true);
