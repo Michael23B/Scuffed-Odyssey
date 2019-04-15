@@ -2,14 +2,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : Unit
 {
     [SerializeField] float moveSpeedModifier = 0.1f;
-    [SerializeField] float bulletSpeedModifier = 10f;
-    public GameObject attackHitBox;
-    public GameObject bullet;
+    public GameObject blockHitBox;
 
-    private GameObject attackHitBoxInstantiated;
+    private GameObject blockHitBoxInstantiated;
     private float dodgeCooldown = 0f;
 
     private Rigidbody2D rgb;
@@ -18,8 +16,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         rgb = GetComponent<Rigidbody2D>();
-        attackHitBoxInstantiated = Instantiate(attackHitBox, rgb.position, Quaternion.identity);
-        attackHitBoxInstantiated.SetActive(false);
+        blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
+        blockHitBoxInstantiated.SetActive(false);
     }
 
     void Update()
@@ -42,32 +40,21 @@ public class Player : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                FireBullet();
+                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)));
             }
 
-            if (Input.GetKeyUp(KeyCode.Z))
+            if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                attackHitBoxInstantiated.SetActive(false);
+                blockHitBoxInstantiated.SetActive(false);
             }
-            else if (Input.GetKey(KeyCode.Z))
+            else if (Input.GetKey(KeyCode.LeftShift))
             {
-                attackHitBoxInstantiated.SetActive(true);
-                attackHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + newPos);
+                blockHitBoxInstantiated.SetActive(true);
+                blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + newPos);
             }
         }
 
         if (dodgeCooldown > 0)
             dodgeCooldown -= Time.deltaTime;
-    }
-
-    private void FireBullet()
-    {
-        Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-        Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 direction = target - myPos;
-        direction.Normalize();
-        Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        GameObject projectile = (GameObject)Instantiate(bullet, myPos, rotation);
-        projectile.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
     }
 }
