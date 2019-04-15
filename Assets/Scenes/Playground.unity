@@ -261,5 +261,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3899725344637123329, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: attackHitBox
+      value: 
+      objectReference: {fileID: 5846260577206842446, guid: c730d8c100ba7b14d8dac2d9504cb16c,
+        type: 3}
+    - target: {fileID: 3899725344637123329, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 7599082252177332919, guid: e0f8d02e3349385468671be5e6b15046,
+        type: 3}
+    - target: {fileID: 3899725344637123329, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: bulletSpeedModifier
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6144318129317819129, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2, type: 3}
