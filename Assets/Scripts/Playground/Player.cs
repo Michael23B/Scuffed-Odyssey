@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             if (dodgeCooldown <= 0)
             {
                 Vector2 newPos = new Vector2(rgb.position.x + horizontal * 1.5f, rgb.position.y + vertical * 1.5f);
@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
             Vector2 newPos = new Vector2(rgb.position.x + horizontal * moveSpeedModifier, rgb.position.y + vertical * moveSpeedModifier);
             rgb.MovePosition(newPos);
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetMouseButtonDown(0))
             {
-                Instantiate(bullet, newPos, Quaternion.identity).GetComponent<Rigidbody2D>().velocity += new Vector2(horizontal * bulletSpeedModifier, vertical * bulletSpeedModifier);
+                FireBullet();
             }
 
             if (Input.GetKeyUp(KeyCode.Z))
@@ -58,5 +58,16 @@ public class Player : MonoBehaviour
 
         if (dodgeCooldown > 0)
             dodgeCooldown -= Time.deltaTime;
+    }
+
+    private void FireBullet()
+    {
+        Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+        Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 direction = target - myPos;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        GameObject projectile = (GameObject)Instantiate(bullet, myPos, rotation);
+        projectile.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
     }
 }
