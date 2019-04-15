@@ -141,7 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db57027db5581c4cb5ea085c1b697f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bTile: {fileID: 11400000, guid: 3bdb5c5d8780b514b9493dbd55be1d1f, type: 2}
+  bTile:
+  - {fileID: 11400000, guid: 999d7da2a6ca6744fad95f219ed87e0f, type: 2}
+  - {fileID: 11400000, guid: 9c4c90e382b7c6a419d19db3cd017d8e, type: 2}
+  - {fileID: 11400000, guid: c235209f44785514a8282f8c4ad646cd, type: 2}
   tmWorld: {fileID: 1287729267}
 --- !u!4 &287795757
 Transform:
@@ -151,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287795755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.3, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -209,7 +212,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 24.902054
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -233,7 +236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874197198}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 39.8, y: -22.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
