@@ -10,7 +10,7 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: da94dfadf88f75247b7185d333bf4f6a, type: 3}
+  script: {fileID: 11500000, guid: 1ac71093196cc014ca658524c932cb4e, type: 3}
   textureSettings:
     textureType: 8
     pixelsPerUnit: 32

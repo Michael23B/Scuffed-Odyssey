@@ -196,6 +196,21 @@ PrefabInstance:
       propertyPath: m_UseAutoMass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6144318129317819111, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144318129317819111, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144318129317819111, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 792bf3b4a4c0b3b4cb18a91bbae87ff2, type: 3}
 --- !u!1 &1576054278 stripped

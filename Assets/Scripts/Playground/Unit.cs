@@ -11,8 +11,8 @@ public abstract class Unit : MonoBehaviour
     {
         Vector2 direction = target - origin;
         direction.Normalize();
-        Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        GameObject projectile = Instantiate(bullet, origin, rotation);
+//        Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        GameObject projectile = Instantiate(bullet, origin, Quaternion.identity);
         projectile.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
     }
 }
