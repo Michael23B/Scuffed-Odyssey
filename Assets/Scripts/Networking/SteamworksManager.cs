@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using Facepunch.Steamworks;
 using UnityEngine;
 
@@ -22,88 +21,11 @@ public class SteamworksManager : MonoBehaviour
             return;
         }
 
-        // Setup callbacks
-        Client.Instance.Lobby.OnLobbyCreated = (success) =>
-        {
-            Debug.Log($"Lobby Created? {success}");
-            if (success)
-            {
-                // Create local player
-                if (!localPlayer)
-                {
-                    localPlayer = CreateNetworkPlayer(true, Client.Instance.SteamId);
-                }
-            }
-        };
-
-        Client.Instance.Lobby.OnLobbyJoined = (success) =>
-        {
-            Debug.Log($"Lobby Joined? {success}");
-            if (success)
-            {
-                var data = Encoding.UTF8.GetBytes("spawn"); // Spawn packet
-
-                if (!localPlayer)
-                {
-                    localPlayer = CreateNetworkPlayer(true, Client.Instance.SteamId);
-                }
-
-                // Create a player for each other player in the lobby
-                foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
-                {
-                    if (memberId != Client.Instance.SteamId)
-                    {
-                        clientPlayers.Add(CreateNetworkPlayer(false, memberId));
-
-                        // Send this player a packet to spawn a player for you on their screen
-                        Client.Instance.Networking.SendP2PPacket(memberId, data, data.Length);
-                    }
-                }
-
-                // Send a message to other players to create a player with my id
-            }
-        };
-
-        Client.Instance.LobbyList.OnLobbiesUpdated = () =>
-        {
-            if (Client.Instance.LobbyList.Finished)
-            {
-                Debug.Log($"Found {Client.Instance.LobbyList.Lobbies.Count} lobbies");
-
-                foreach (LobbyList.Lobby lobby in Client.Instance.LobbyList.Lobbies)
-                {
-                    Debug.Log($"Found Lobby: {lobby.Name}");
-                }
-            }
-
-        };
-
-        Client.Instance.Networking.OnP2PData = (steamid, bytes, length, channel) =>
-        {
-            var str = Encoding.UTF8.GetString(bytes, 0, length);
-
-            // Spawn packet, create a NetworkPlayer for the new player
-            if (str == "spawn")
-            {
-                clientPlayers.Add(CreateNetworkPlayer(false, steamid));
-                return;
-            }
-
-            var senderPlayer = clientPlayers.Find(player => player.PlayerId == steamid);
-
-            if (senderPlayer)
-            {
-                string[] data = str.Split('?');
-                float senderX = float.Parse(data[0]);
-                float senderY = float.Parse(data[1]);
-
-                senderPlayer.transform.position = new Vector3(senderX, senderY);
-            }
-        };
-
-        Client.Instance.Networking.SetListenChannel(0, true);
+        // Setup our callback methods
+        SteamworksCallbacks.Initialize();
     }
 
+    // TODO move to own class with UI methods
     public void CreateLobby()
     {
         Client.Instance.Lobby.Leave();
