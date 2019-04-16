@@ -1,10 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.XR.WSA;
 
 public static class UtilityMethods
 {
+    // Checks an instance of this class doesn't already exist and returns the object it was called on
+    public static T GetAndEnforceSingleInstance<T>(this T me, T instance)
+    {
+        if (instance != null && !instance.Equals(me))
+        {
+            throw new Exception("Only one instance this class can exist.");
+        }
+
+        return me;
+    }
+
     // Initializes every element of an array to the provided value
     public static T[] InitializeArray<T>(this T[] arr, T value)
     {
