@@ -5,9 +5,9 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float lifespan = 4f;
 
-    public GameObject firer;
-    public float bulletSpeedModifier;
-
+    private GameObject firer;
+    private float bulletSpeedModifier;
+    private Vector2 startingPos;
     private Rigidbody2D rgb;
     private Collider2D collider;
 
@@ -16,6 +16,13 @@ public class Bullet : MonoBehaviour
     {
         rgb = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+    }
+
+    public void InitProps(GameObject firer, float bulletSpeedModifier)
+    {
+        this.firer = firer;
+        this.bulletSpeedModifier = bulletSpeedModifier;
+        startingPos = firer.transform.position;
     }
 
     // Update is called once per frame
@@ -28,15 +35,27 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Deflect") {
-            RedirectBullet();
+        Debug.Log(collision.tag);
+        if (collision.tag == "Deflect")
+            DelfectBullet();
+        else if (collision.tag == "Wall")
+        {
+            ContactPoint2D[] contacts = new ContactPoint2D[2];
+            collision.GetContacts(contacts);
+            Ricochet(contacts[0].normal);
         }
     }
 
-    private void RedirectBullet()
+    private void DelfectBullet()
     {
         Vector2 direction = (Vector2)firer.transform.position - new Vector2(transform.position.x, transform.position.y);
         direction.Normalize();
         gameObject.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
+    }
+
+    private void Ricochet(Vector2 normal)
+    {
+        Vector2 reflect = Vector2.Reflect(gameObject.GetComponent<Rigidbody2D>().velocity, new Vector2(1, 0));
+        gameObject.GetComponent<Rigidbody2D>().velocity = reflect;
     }
 }

@@ -12,9 +12,7 @@ public abstract class Unit : MonoBehaviour
         Vector2 direction = target - origin;
         direction.Normalize();
         GameObject projectile = Instantiate(bullet, origin, Quaternion.identity);
-        Bullet b = projectile.GetComponent<Bullet>();
-        b.firer = gameObject;
-        b.bulletSpeedModifier = bulletSpeedModifier;
+        projectile.GetComponent<Bullet>().InitProps(gameObject, bulletSpeedModifier);
         projectile.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
     }
 }
