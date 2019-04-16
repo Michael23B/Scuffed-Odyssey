@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] float lifespan = 2f;
+    [SerializeField] float lifespan = 4f;
+
+    public GameObject firer;
+    public float bulletSpeedModifier;
 
     private Rigidbody2D rgb;
     private Collider2D collider;
@@ -25,6 +28,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.tag);
+        if (collision.tag == "Deflect") {
+            RedirectBullet();
+        }
+    }
+
+    private void RedirectBullet()
+    {
+        Vector2 direction = (Vector2)firer.transform.position - new Vector2(transform.position.x, transform.position.y);
+        direction.Normalize();
+        gameObject.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
     }
 }
