@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float lifespan = 4f;
 
+    private Vector2 originalVelocity;
     private GameObject firer;
     private float bulletSpeedModifier;
     private Vector2 startingPos;
@@ -14,14 +15,17 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rgb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
     }
 
-    public void InitProps(GameObject firer, float bulletSpeedModifier)
+    public void InitProps(GameObject firer, float bulletSpeedModifier, Vector2 velocity)
     {
+        rgb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
+
         this.firer = firer;
         this.bulletSpeedModifier = bulletSpeedModifier;
+        originalVelocity = velocity;
+        rgb.velocity = velocity;
         startingPos = firer.transform.position;
     }
 
@@ -33,29 +37,37 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //TODO check if normal exists in OnTriggerEnter2D
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            Ricochet(collision.contacts[0].normal);
+        }
+        else if (collision.gameObject.tag == "Bullet")
+        {
+            Physics2D.IgnoreCollision(collision.collider, collider); //TODO fix??
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.tag);
         if (collision.tag == "Deflect")
             DelfectBullet();
-        else if (collision.tag == "Wall")
-        {
-            ContactPoint2D[] contacts = new ContactPoint2D[2];
-            collision.GetContacts(contacts);
-            Ricochet(contacts[0].normal);
-        }
     }
 
     private void DelfectBullet()
     {
         Vector2 direction = (Vector2)firer.transform.position - new Vector2(transform.position.x, transform.position.y);
         direction.Normalize();
-        gameObject.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedModifier;
+        originalVelocity = direction * bulletSpeedModifier;
+        rgb.velocity = direction * bulletSpeedModifier;
     }
 
     private void Ricochet(Vector2 normal)
     {
-        Vector2 reflect = Vector2.Reflect(gameObject.GetComponent<Rigidbody2D>().velocity, new Vector2(1, 0));
-        gameObject.GetComponent<Rigidbody2D>().velocity = reflect;
+        Vector2 reflectVelocity = Vector2.Reflect(originalVelocity, normal);
+        originalVelocity = reflectVelocity;
+        rgb.velocity = reflectVelocity;
     }
 }
