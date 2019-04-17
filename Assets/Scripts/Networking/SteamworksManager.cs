@@ -19,6 +19,8 @@ public class SteamworksManager : MonoBehaviour
 
         // Setup our callback methods
         SteamworksCallbacks.Initialize();
+        // Listen for P2P messages on channel 0
+        Client.Instance.Networking.SetListenChannel(0, true);
     }
 
     private void OnDestroy()

@@ -11,8 +11,6 @@ public static class SteamworksCallbacks
         Client.Instance.Lobby.OnLobbyJoined = OnLobbyJoined;
         Client.Instance.LobbyList.OnLobbiesUpdated = OnLobbiesUpdated;
         Client.Instance.Networking.OnP2PData = OnP2PData;
-
-        Client.Instance.Networking.SetListenChannel(0, true);
     }
 
     private static readonly Action<bool> OnLobbyCreated = (success) =>
