@@ -36,14 +36,16 @@ public static class SteamworksCallbacks
                 GameData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
             }
 
+            // Spawn a network player for each client in the lobby
             foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
             {
                 if (memberId != Client.Instance.SteamId)
                 {
-                    NetworkPlayer.CreateNetworkPlayer(false, memberId);
+                    GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, memberId));
                 }
             }
 
+            // Send a message to spawn your player locally for other clients
             NetworkEvents.SendPlayerSpawned();
         }
     };

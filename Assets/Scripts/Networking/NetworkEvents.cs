@@ -29,6 +29,10 @@ public static class NetworkEvents
         }
     }
 
+    /**
+     * Callback methods.
+     * Can be overridden i.e. NetworkEvents.OnPlayerPosition = (args) => {...}.
+     */
     public static Action<PlayerPositionEventArgs> OnPlayerPosition = (args) =>
     {
         var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == args.SteamId);
@@ -42,5 +46,6 @@ public static class NetworkEvents
     public static Action<PlayerSpawnedEventArgs> OnPlayerSpawn = (args) =>
     {
         GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, args.SteamId));
-    };
+    }; 
+    
 }
