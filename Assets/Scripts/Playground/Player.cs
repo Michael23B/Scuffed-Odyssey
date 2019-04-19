@@ -9,13 +9,14 @@ public class Player : Unit
 
     private GameObject blockHitBoxInstantiated;
     private float dodgeCooldown = 0f;
-
+    private Animator animator;
     private Rigidbody2D rgb;
     private Vector2 velocity;
 
     void Start()
     {
         rgb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
     }
@@ -35,8 +36,13 @@ public class Player : Unit
         }
         else
         {
-            Vector2 newPos = new Vector2(rgb.position.x + horizontal * moveSpeedModifier, rgb.position.y + vertical * moveSpeedModifier);
-            rgb.MovePosition(newPos);
+            if (horizontal != 0 || vertical != 0)
+            {
+                animator.SetBool("playerWalking", true);
+                Vector2 newPos = new Vector2(rgb.position.x + horizontal * moveSpeedModifier, rgb.position.y + vertical * moveSpeedModifier);
+                rgb.MovePosition(newPos);
+            }
+            else animator.SetBool("playerWalking", false);
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -54,7 +60,7 @@ public class Player : Unit
             else if (Input.GetKey(KeyCode.LeftShift))
             {
                 blockHitBoxInstantiated.SetActive(true);
-                blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + newPos);
+                blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + (Vector2)transform.position);
             }
         }
 
