@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 2076892245}
   m_Layer: 0
   m_Name: PracticeDummy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -648,8 +648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6483049b5a91230439dfbbaa86846664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
   bulletSpeedModifier: 10
   bullet: {fileID: 7599082252177332919, guid: e0f8d02e3349385468671be5e6b15046, type: 3}
   specialBullet: {fileID: 0}
   targetObject: {fileID: 1576054278}
   shootCooldown: 2
+  oddsOfMutatingIncrement: 10
