@@ -19,4 +19,12 @@ public class NetworkPlayer : MonoBehaviour
             }
         }
     }
+
+    public static NetworkPlayer CreateNetworkPlayer(bool isLocalPlayer, ulong playerId)
+    {
+        GameObject player = Instantiate(PrefabHelper.Instance.PlayerPrefab);
+        NetworkPlayer networkPlayer = player.GetComponent<NetworkPlayer>();
+        networkPlayer.InitializePlayer(isLocalPlayer, playerId);
+        return networkPlayer;
+    }
 }
