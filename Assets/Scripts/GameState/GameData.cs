@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkData : MonoBehaviour
+public class GameData : MonoBehaviour
 {
-    public static NetworkData Instance { get; private set; }
+    public static GameData Instance { get; private set; }
 
     public NetworkPlayer LocalPlayer { get; set; }
     public List<NetworkPlayer> ClientPlayers { get; set; } = new List<NetworkPlayer>();

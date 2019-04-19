@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using Facepunch.Steamworks;
 using UnityEngine;
 
@@ -19,9 +18,9 @@ public static class SteamworksCallbacks
         if (success)
         {
             // Create local player
-            if (!NetworkData.Instance.LocalPlayer)
+            if (!GameData.Instance.LocalPlayer)
             {
-                NetworkData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
+                GameData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
             }
         }
     };
@@ -31,24 +30,13 @@ public static class SteamworksCallbacks
         Debug.Log($"Lobby Joined? {success}");
         if (success)
         {
-            var data = Encoding.UTF8.GetBytes("spawn"); // Spawn packet
-
-            if (!NetworkData.Instance.LocalPlayer)
+            // If we don't have a local player, create one
+            if (!GameData.Instance.LocalPlayer)
             {
-                NetworkData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
+                GameData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
             }
 
-            // Create a player for each other player in the lobby
-            foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
-            {
-                if (memberId != Client.Instance.SteamId)
-                {
-                    NetworkData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, memberId));
-
-                    // Send this player a packet to spawn a player for you on their screen
-                    Client.Instance.Networking.SendP2PPacket(memberId, data, data.Length);
-                }
-            }
+            NetworkEvents.SendPlayerSpawned();
         }
     };
 
@@ -67,25 +55,6 @@ public static class SteamworksCallbacks
 
     private static readonly Networking.OnRecievedP2PData OnP2PData = (steamid, bytes, length, channel) =>
     {
-        // TODO this should defer to another class that handles receiving/sending data
-        var str = Encoding.UTF8.GetString(bytes, 0, length);
-
-        // Spawn packet, create a NetworkPlayer for the new player
-        if (str == "spawn")
-        {
-            NetworkData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, steamid));
-            return;
-        }
-
-        var senderPlayer = NetworkData.Instance.ClientPlayers.Find(player => player.PlayerId == steamid);
-
-        if (senderPlayer)
-        {
-            string[] data = str.Split('?');
-            float senderX = float.Parse(data[0]);
-            float senderY = float.Parse(data[1]);
-
-            senderPlayer.transform.position = new Vector3(senderX, senderY);
-        }
+        PacketHandler.HandlePacket(steamid, bytes, length);
     };
 }
