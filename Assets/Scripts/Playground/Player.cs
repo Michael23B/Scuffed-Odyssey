@@ -40,7 +40,11 @@ public class Player : Unit
 
             if (Input.GetMouseButtonDown(0))
             {
-                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)));
+                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))

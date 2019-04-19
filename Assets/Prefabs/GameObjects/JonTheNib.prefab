@@ -136,9 +136,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeedModifier: 10
-  bullet: {fileID: 0}
+  bullet: {fileID: 5840294940948800322, guid: c8bfc041b640cb84bafc739621fb8162, type: 3}
   moveSpeedModifier: 0.1
-  blockHitBox: {fileID: 0}
+  blockHitBox: {fileID: 5846260577206842446, guid: c730d8c100ba7b14d8dac2d9504cb16c,
+    type: 3}
 --- !u!61 &8067496344534475024
 BoxCollider2D:
   m_ObjectHideFlags: 0

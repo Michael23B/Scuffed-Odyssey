@@ -37,15 +37,11 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) //TODO check if normal exists in OnTriggerEnter2D
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
             Ricochet(collision.contacts[0].normal);
-        }
-        else if (collision.gameObject.tag == "Bullet")
-        {
-            Physics2D.IgnoreCollision(collision.collider, collider); //TODO fix??
         }
     }
 

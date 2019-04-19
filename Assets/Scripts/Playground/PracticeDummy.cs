@@ -22,7 +22,7 @@ public class PracticeDummy : Unit
         if (time > shootCooldown)
         {
             time = 0f;
-            FireBullet(new Vector2(transform.position.x, transform.position.y), targetObject.transform.position);
+            FireBullet(new Vector2(transform.position.x, transform.position.y), targetObject.transform.position, false);
         }
     }
 }
