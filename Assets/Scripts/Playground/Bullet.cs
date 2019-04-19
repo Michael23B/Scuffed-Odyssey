@@ -5,9 +5,12 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float lifespan = 4f;
 
+    public int bulletDmg = 1;
+    public bool isSpecial;
+
+    private float bulletSpeedModifier;
     private Vector2 originalVelocity;
     private GameObject firer;
-    private float bulletSpeedModifier;
     private Vector2 startingPos;
     private Rigidbody2D rgb;
     private Collider2D collider;
@@ -17,13 +20,14 @@ public class Bullet : MonoBehaviour
     {
     }
 
-    public void InitProps(GameObject firer, float bulletSpeedModifier, Vector2 velocity)
+    public void InitProps(GameObject firer, float bulletSpeedModifier, Vector2 velocity, bool isSpecial)
     {
         rgb = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
 
         this.firer = firer;
         this.bulletSpeedModifier = bulletSpeedModifier;
+        this.isSpecial = isSpecial;
         originalVelocity = velocity;
         rgb.velocity = velocity;
         startingPos = firer.transform.position;
@@ -47,9 +51,14 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.tag);
-        if (collision.tag == "Deflect")
-            DelfectBullet();
+        //Debug.Log(collision.tag);
+        if (collision.tag != firer.tag)
+        {
+            if (collision.tag == "Deflect")
+                DelfectBullet();
+            if (collision.tag == "Enemy" || collision.tag == "Player")
+                collision.gameObject.GetComponent<Unit>().HandleDamamge(gameObject);
+        }
     }
 
     private void DelfectBullet()

@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifespan: 4
+  bulletDmg: 1
+  isSpecial: 1
 --- !u!61 &5840294940948800326
 BoxCollider2D:
   m_ObjectHideFlags: 0

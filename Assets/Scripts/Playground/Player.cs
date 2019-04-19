@@ -61,4 +61,10 @@ public class Player : Unit
         if (dodgeCooldown > 0)
             dodgeCooldown -= Time.deltaTime;
     }
+
+    override public void HandleDamamge(GameObject bullet)
+    {
+        health -= bullet.GetComponent<Bullet>().bulletDmg;
+        Destroy(bullet);
+    }
 }
