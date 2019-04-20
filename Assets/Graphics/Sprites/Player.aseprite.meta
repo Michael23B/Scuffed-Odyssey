@@ -7,7 +7,7 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: da94dfadf88f75247b7185d333bf4f6a, type: 3}
+  script: {fileID: 11500000, guid: 02142ae8422acc344908d38e531441d9, type: 3}
   textureSettings:
     textureType: 8
     pixelsPerUnit: 32
@@ -21,20 +21,17 @@ ScriptedImporter:
     tilePadding: {x: 0, y: 0}
     tileOffset: {x: 0, y: 0}
   animationSettings:
-  - animationName: Gun
-    loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 1"
   - animationName: WalkingGun
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 2; To: 7"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 1; To: 6"
   - animationName: IdleGun
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 8; To: 11"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 7; To: 10"
   - animationName: Idle
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 12; To: 15"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 11; To: 14"
   - animationName: Walking
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 16; To: 20"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 15; To: 20"
   atlas: {instanceID: 0}
   importType: 0
