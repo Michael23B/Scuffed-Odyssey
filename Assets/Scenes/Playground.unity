@@ -120,13 +120,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &99968239 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 704212473666625940, guid: 4e4feca4f642a3847b5baf31c0dbd875,
-    type: 3}
-  m_PrefabInstance: {fileID: 892363685}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &892363685
+--- !u!1001 &1526420640
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -136,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 704212473666625940, guid: 4e4feca4f642a3847b5baf31c0dbd875,
         type: 3}
       propertyPath: m_Name
-      value: Player 1
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 704212473666625938, guid: 4e4feca4f642a3847b5baf31c0dbd875,
         type: 3}
@@ -278,6 +272,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2016826552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 704212473666625940, guid: 4e4feca4f642a3847b5baf31c0dbd875,
+    type: 3}
+  m_PrefabInstance: {fileID: 1526420640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1634438493940878550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,7 +349,13 @@ PrefabInstance:
         type: 3}
       propertyPath: targetObject
       value: 
-      objectReference: {fileID: 99968239}
+      objectReference: {fileID: 2016826552}
+    - target: {fileID: 1634438495665180803, guid: a4566f3ffa660444890d1b5d8b2f6fc4,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 7599082252177332919, guid: e0f8d02e3349385468671be5e6b15046,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4566f3ffa660444890d1b5d8b2f6fc4, type: 3}
 --- !u!1001 &4344386830574784770

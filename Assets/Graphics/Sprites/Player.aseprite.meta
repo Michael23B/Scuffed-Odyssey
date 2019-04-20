@@ -21,11 +21,20 @@ ScriptedImporter:
     tilePadding: {x: 0, y: 0}
     tileOffset: {x: 0, y: 0}
   animationSettings:
+  - animationName: Gun
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 1"
+  - animationName: WalkingGun
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 2; To: 7"
+  - animationName: IdleGun
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 8; To: 11"
   - animationName: Idle
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 3"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 12; To: 15"
   - animationName: Walking
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 4; To: 9"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 16; To: 20"
   atlas: {instanceID: 0}
   importType: 0

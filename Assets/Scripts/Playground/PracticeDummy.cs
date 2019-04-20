@@ -5,8 +5,10 @@ using Random = UnityEngine.Random;
 
 public class PracticeDummy : Unit
 {
-    [SerializeField] GameObject targetObject;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject targetObject;
     [SerializeField] float shootCooldown = 2f;
+    [SerializeField] float bulletSpeedModifier = 10f;
     [SerializeField] int oddsOfMutatingIncrement = 10;
 
     private int oddsOfMutating = 0;
@@ -26,7 +28,7 @@ public class PracticeDummy : Unit
         if (time > shootCooldown)
         {
             time = 0f;
-            FireBullet(new Vector2(transform.position.x, transform.position.y), targetObject.transform.position, false);
+            FireBullet(new Vector2(transform.position.x, transform.position.y), targetObject.transform.position);
         }
     }
 
@@ -48,5 +50,14 @@ public class PracticeDummy : Unit
             }
         }
         Destroy(incomingBullet);
+    }
+
+    private void FireBullet(Vector2 origin, Vector2 target)
+    {
+        Vector2 direction = target - origin;
+        direction.Normalize();
+        GameObject projectile = Instantiate(bullet, origin, Quaternion.identity);
+        projectile.SetActive(true); // needed for for when enemy has learnt
+        projectile.GetComponent<Bullet>().InitProps(gameObject, bulletSpeedModifier, direction * bulletSpeedModifier, false);
     }
 }
