@@ -39,7 +39,7 @@ public static class NetworkEvents
 
         if (senderPlayer)
         {
-            senderPlayer.transform.position = new Vector3(args.X, args.Y);
+            senderPlayer.RigidBody.MovePosition(new Vector2(args.X, args.Y));
         }
     };
 

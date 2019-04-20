@@ -3,6 +3,7 @@
 public class NetworkPlayer : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour[] localPlayerScripts = null;
+    public Rigidbody2D RigidBody { get; private set; }
     public bool IsLocalPlayer { get; private set; }
     public ulong PlayerId { get; private set; }
 
@@ -10,6 +11,7 @@ public class NetworkPlayer : MonoBehaviour
     {
         IsLocalPlayer = isLocalPlayer;
         PlayerId = playerId;
+        RigidBody = GetComponent<Rigidbody2D>();
 
         if (!isLocalPlayer)
         {
