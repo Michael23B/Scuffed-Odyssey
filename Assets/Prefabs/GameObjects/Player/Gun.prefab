@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8917588112410889261, guid: 55ab10d5a9b81ee448639d6ed83499dd,
+  m_Sprite: {fileID: -974596146243589746, guid: 55ab10d5a9b81ee448639d6ed83499dd,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -105,11 +105,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1869565657479281328}
     m_Modifications:
-    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
-        type: 3}
-      propertyPath: m_Name
-      value: BulletSpawn
-      objectReference: {fileID: 0}
     - target: {fileID: 291763146179233676, guid: 7ac7691c55ca92649896438dbeb58a6c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -164,6 +159,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
+        type: 3}
+      propertyPath: m_Name
+      value: BulletSpawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac7691c55ca92649896438dbeb58a6c, type: 3}

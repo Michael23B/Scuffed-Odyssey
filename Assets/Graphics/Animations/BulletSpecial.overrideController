@@ -9,5 +9,7 @@ AnimatorOverrideController:
   m_Name: BulletSpecial
   m_Controller: {fileID: 9100000, guid: 083ea86d42e1edf4a9f7e714e35ecc17, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 968da30d9b83b8e43bf7e2349ac57737, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 769244d89e93ade46b34e976b30b7626, type: 2}
+  - m_OriginalClip: {fileID: 685445331003939937, guid: e5e5f669f85ec10409674f9d081e4eb2,
+      type: 3}
+    m_OverrideClip: {fileID: 7471116920350783396, guid: e5e5f669f85ec10409674f9d081e4eb2,
+      type: 3}
