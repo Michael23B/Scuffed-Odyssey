@@ -39,13 +39,24 @@ public static class NetworkEvents
 
         if (senderPlayer)
         {
-            senderPlayer.RigidBody.MovePosition(new Vector2(args.X, args.Y));
+            senderPlayer.Player.LerpMovement.StartMoving(new Vector2(args.X, args.Y));
+//            senderPlayer.RigidBody.MovePosition(new Vector2(args.X, args.Y));
         }
     };
 
     public static Action<PlayerSpawnedEventArgs> OnPlayerSpawn = (args) =>
     {
         GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, args.SteamId));
-    }; 
-    
+    };
+
+    public static Action<PlayerFireEventArgs> OnPlayerFire = (args) =>
+    {
+        var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == args.SteamId);
+
+        if (senderPlayer)
+        {
+            // TODO get the latest master and use the public fire method
+//            senderPlayer.Player.
+        }
+    };
 }

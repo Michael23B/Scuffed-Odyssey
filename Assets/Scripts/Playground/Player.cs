@@ -11,11 +11,13 @@ public class Player : Unit
     private Animator animator;
     private Rigidbody2D rgb;
     private Vector2 velocity;
+    public LerpMovement LerpMovement { get; private set; }
 
     void Start()
     {
         rgb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        LerpMovement = GetComponent<LerpMovement>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
     }

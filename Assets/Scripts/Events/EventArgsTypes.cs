@@ -21,3 +21,18 @@ public class PlayerSpawnedEventArgs : EventArgs
     }
     public ulong SteamId { get; }
 }
+
+public class PlayerFireEventArgs : EventArgs
+{
+    public PlayerFireEventArgs(ulong steamId, float x, float y, int bulletType)
+    {
+        SteamId = steamId;
+        X = x;
+        Y = y;
+        BulletType = bulletType;
+    }
+    public ulong SteamId { get; }
+    public float X { get; }
+    public float Y { get; }
+    public float BulletType { get; }
+}
