@@ -7,25 +7,12 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: 73bbba44690bcf5488434aa3a7133368, type: 3}
-  textureSettings:
-    textureType: 8
-    pixelsPerUnit: 32
-    meshType: 1
-    extrudeEdges: 1
-    spritePivot: {x: 0.5, y: 0.5}
-    generatePhysics: 1
-    wrapMode: 1
-    filterMode: 0
-    tileSize: {x: 32, y: 32}
-    tilePadding: {x: 0, y: 0}
-    tileOffset: {x: 0, y: 0}
-  animationSettings:
-  - animationName: Idle
-    loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 3"
-  - animationName: Walking
-    loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 4; To: 9"
-  atlas: {instanceID: 0}
-  importType: 0
+  script: {fileID: 11500000, guid: b1577cdc41d01fa4dbf68ad51122a765, type: 3}
+  pixelsPerUnit: 100
+  spriteAtlas: {instanceID: 0}
+  frameRate: 60
+  sortingLayerName: 
+  sortingOrder: 0
+  animatorCullingMode: 0
+  animatorController: {instanceID: 0}
+  errors: []

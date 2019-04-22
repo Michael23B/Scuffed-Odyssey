@@ -3,11 +3,14 @@
 //[RequireComponent(typeof(Rigidbody2D))]
 public class Player : Unit
 {
+    [SerializeField] public GameObject gun;
+    [SerializeField] public GameObject bulletSpawn;
+
     [SerializeField] float moveSpeedModifier = 0.1f;
     public GameObject blockHitBox;
-
-    private GameObject blockHitBoxInstantiated;
+    
     private float dodgeCooldown = 0f;
+    private GameObject blockHitBoxInstantiated;
     private Animator animator;
     private Rigidbody2D rgb;
     private Vector2 velocity;
@@ -47,11 +50,11 @@ public class Player : Unit
 
             if (Input.GetMouseButtonDown(0))
             {
-                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
+                gun.GetComponent<Gun>().FireBullet(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                FireBullet(new Vector2(transform.position.x, transform.position.y), Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
+                gun.GetComponent<Gun>().FireBullet(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
