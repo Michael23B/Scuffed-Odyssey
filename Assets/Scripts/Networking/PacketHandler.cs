@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using UnityEngine;
 
 public static class PacketHandler
 {
@@ -22,10 +23,26 @@ public static class PacketHandler
         switch (packetType)
         {
             case (int)Constants.PacketType.PlayerPosition:
-                NetworkEvents.OnPlayerPosition(new PlayerPositionEventArgs(steamid, float.Parse(properties[1]), float.Parse(properties[2])));
+                NetworkEvents.OnPlayerPosition(new PlayerPositionEventArgs(
+                    steamid,
+                    float.Parse(properties[1]),
+                    float.Parse(properties[2])
+                    )
+                );
                 break;
             case (int)Constants.PacketType.PlayerSpawned:
                 NetworkEvents.OnPlayerSpawn(new PlayerSpawnedEventArgs(steamid));
+                break;
+            case (int)Constants.PacketType.PlayerFired:
+                NetworkEvents.OnPlayerFire(new PlayerFiredEventArgs(
+                    steamid,
+                    float.Parse(properties[1]),
+                    float.Parse(properties[2]), 
+                    float.Parse(properties[3]),
+                    float.Parse(properties[4]),
+                    bool.Parse(properties[5])
+                    )
+                );
                 break;
             default:
                 throw new Exception($"Could not read packet type {properties[0]}");

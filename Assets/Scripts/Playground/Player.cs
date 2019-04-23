@@ -15,12 +15,14 @@ public class Player : Unit
     private Rigidbody2D rgb;
     private Vector2 velocity;
     public LerpMovement LerpMovement { get; private set; }
+    public Gun Gun { get; private set; }
 
     void Start()
     {
         rgb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         LerpMovement = GetComponent<LerpMovement>();
+        Gun = gun.GetComponent<Gun>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
     }
@@ -50,11 +52,11 @@ public class Player : Unit
 
             if (Input.GetMouseButtonDown(0))
             {
-                gun.GetComponent<Gun>().FireBullet(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
+                FireGun(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                gun.GetComponent<Gun>().FireBullet(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
+                FireGun(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -76,5 +78,11 @@ public class Player : Unit
     {
         health -= bullet.GetComponent<Bullet>().bulletDmg;
         Destroy(bullet);
+    }
+
+    public void FireGun(Vector2 origin, Vector2 target, bool isSpecial)
+    {
+        Gun.FireBullet(origin, target, isSpecial);
+        NetworkEvents.SendPlayerFired(origin, target, isSpecial);
     }
 }

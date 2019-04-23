@@ -16,7 +16,7 @@ public class NetworkPlayer : MonoBehaviour
         return networkPlayer;
     }
 
-    public void InitializePlayer(bool isLocalPlayer, ulong playerId)
+    private void InitializePlayer(bool isLocalPlayer, ulong playerId)
     {
         IsLocalPlayer = isLocalPlayer;
         PlayerId = playerId;

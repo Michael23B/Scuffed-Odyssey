@@ -76,7 +76,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -124,10 +124,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1869565657479281328}
     m_Modifications:
+    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
+        type: 3}
+      propertyPath: m_Name
+      value: BulletSpawn
+      objectReference: {fileID: 0}
     - target: {fileID: 291763146179233676, guid: 7ac7691c55ca92649896438dbeb58a6c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 291763146179233676, guid: 7ac7691c55ca92649896438dbeb58a6c,
         type: 3}
@@ -178,11 +183,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
-        type: 3}
-      propertyPath: m_Name
-      value: BulletSpawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac7691c55ca92649896438dbeb58a6c, type: 3}

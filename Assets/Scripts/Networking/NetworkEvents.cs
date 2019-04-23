@@ -17,6 +17,13 @@ public static class NetworkEvents
         SendToLobby(data);
     }
 
+    public static void SendPlayerFired(Vector2 origin, Vector2 target, bool isSpecial)
+    {
+        string[] args = { origin.x.ToString(), origin.y.ToString(), target.x.ToString(), target.y.ToString(), isSpecial.ToString() };
+        byte[] data = PacketHandler.SerializePacket(Constants.PacketType.PlayerFired, args);
+        SendToLobby(data);
+    }
+
     // Send data packet to each other player in the lobby
     private static void SendToLobby(byte[] data)
     {
@@ -49,14 +56,13 @@ public static class NetworkEvents
         GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, args.SteamId));
     };
 
-    public static Action<PlayerFireEventArgs> OnPlayerFire = (args) =>
+    public static Action<PlayerFiredEventArgs> OnPlayerFire = (args) =>
     {
         var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == args.SteamId);
 
         if (senderPlayer)
         {
-            // TODO get the latest master and use the public fire method
-//            senderPlayer.Player.
+            senderPlayer.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial);
         }
     };
 }

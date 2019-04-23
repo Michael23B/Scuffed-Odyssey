@@ -22,17 +22,21 @@ public class PlayerSpawnedEventArgs : EventArgs
     public ulong SteamId { get; }
 }
 
-public class PlayerFireEventArgs : EventArgs
+public class PlayerFiredEventArgs : EventArgs
 {
-    public PlayerFireEventArgs(ulong steamId, float x, float y, int bulletType)
+    public PlayerFiredEventArgs(ulong steamId, float x, float y, float mouseX, float mouseY, bool isSpecial)
     {
         SteamId = steamId;
         X = x;
         Y = y;
-        BulletType = bulletType;
+        MouseX = mouseX;
+        MouseY = mouseY;
+        IsSpecial = isSpecial;
     }
     public ulong SteamId { get; }
     public float X { get; }
     public float Y { get; }
-    public float BulletType { get; }
+    public float MouseX { get; }
+    public float MouseY { get; }
+    public bool IsSpecial { get; }
 }

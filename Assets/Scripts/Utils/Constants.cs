@@ -5,7 +5,8 @@
     public enum PacketType
     {
         PlayerPosition,
-        PlayerSpawned
+        PlayerSpawned,
+        PlayerFired
     }
 }
 
