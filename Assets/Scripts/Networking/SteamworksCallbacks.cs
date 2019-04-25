@@ -30,6 +30,7 @@ public static class SteamworksCallbacks
         Debug.Log($"Lobby Joined? {success}");
         if (success)
         {
+            Debug.Log($"Joined {Client.Instance.Lobby.Name}");
             // If we don't have a local player, create one
             if (!GameData.Instance.LocalPlayer)
             {

@@ -17,14 +17,20 @@ public class Player : Unit
     public LerpMovement LerpMovement { get; private set; }
     public Gun Gun { get; private set; }
 
-    void Start()
+    public void Initialize()
     {
+        Debug.Log("Player Initialized");
         rgb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         LerpMovement = GetComponent<LerpMovement>();
         Gun = gun.GetComponent<Gun>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
+    }
+
+    void Start()
+    {
+        Initialize();
     }
 
     void Update()

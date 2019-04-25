@@ -22,6 +22,7 @@ public class NetworkPlayer : MonoBehaviour
         PlayerId = playerId;
         RigidBody = GetComponent<Rigidbody2D>();
         Player = GetComponent<Player>();
+        Player.Initialize();
 
         if (!isLocalPlayer)
         {

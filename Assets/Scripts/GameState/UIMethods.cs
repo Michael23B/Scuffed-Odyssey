@@ -14,7 +14,7 @@ public class UIMethods : MonoBehaviour
         if (Client.Instance.LobbyList.Lobbies.Count > 0)
         {
             // Join the most recently created lobby
-            Client.Instance.Lobby.Join(Client.Instance.LobbyList.Lobbies[Client.Instance.LobbyList.Lobbies.Count - 1].LobbyID);
+            Client.Instance.Lobby.Join(Client.Instance.LobbyList.Lobbies[0].LobbyID);
             return;
         }
         Debug.Log("No lobby to join");

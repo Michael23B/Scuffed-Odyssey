@@ -32,7 +32,9 @@ public class LerpMovement : MonoBehaviour
             return;
         }
 
-        rb.MovePosition(transform.position + difference * 0.1f);
+//        rb.MovePosition(Vector2.MoveTowards(transform.position, target, Time.deltaTime));
+
+        rb.MovePosition(transform.position + difference * MovePercentagePerFrame);
     }
 
     public void StartMoving(Vector3 target)
