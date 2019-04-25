@@ -19,7 +19,6 @@ public class Player : Unit
 
     public void Initialize()
     {
-        Debug.Log("Player Initialized");
         rgb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         LerpMovement = GetComponent<LerpMovement>();
@@ -86,9 +85,12 @@ public class Player : Unit
         Destroy(bullet);
     }
 
-    public void FireGun(Vector2 origin, Vector2 target, bool isSpecial)
+    public void FireGun(Vector2 origin, Vector2 target, bool isSpecial, bool fireEvent = true)
     {
         Gun.FireBullet(origin, target, isSpecial);
-        NetworkEvents.SendPlayerFired(origin, target, isSpecial);
+        if (fireEvent)
+        {
+            NetworkEvents.SendPlayerFired(origin, target, isSpecial);
+        }
     }
 }

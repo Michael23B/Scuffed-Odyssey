@@ -3,6 +3,7 @@
 public class LerpMovement : MonoBehaviour
 {
     public float MovePercentagePerFrame = 0.25f;
+
     private Rigidbody2D rb;
     private bool isMoving;
     private Vector3 difference;
@@ -19,20 +20,18 @@ public class LerpMovement : MonoBehaviour
 
         difference = target - transform.position;
 
-        if (difference.magnitude < 0.1)
+        if (difference.magnitude < 0.01f)
         {
             StopMoving();
             return;
         }
 
-        if (difference.magnitude > 2)
+        if (difference.magnitude > 5)
         {
             rb.MovePosition(target);
             StopMoving();
             return;
         }
-
-//        rb.MovePosition(Vector2.MoveTowards(transform.position, target, Time.deltaTime));
 
         rb.MovePosition(transform.position + difference * MovePercentagePerFrame);
     }

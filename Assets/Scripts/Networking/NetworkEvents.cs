@@ -6,6 +6,12 @@ public static class NetworkEvents
 {
     public static void SendPlayerPosition(float x, float y)
     {
+        // Temporary code to test movement lerping
+        if (GameData.Instance.DummyNetworkPlayer != null)
+        {
+            GameData.Instance.DummyNetworkPlayer.Player.LerpMovement.StartMoving(new Vector2(x + 1, y + 1));
+        }
+
         string[] args = { Math.Round(x, 2).ToString(), Math.Round(y, 2).ToString() };
         byte[] data = PacketHandler.SerializePacket(Constants.PacketType.PlayerPosition, args);
         SendToLobby(data);
@@ -62,7 +68,7 @@ public static class NetworkEvents
 
         if (senderPlayer)
         {
-            senderPlayer.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial);
+            senderPlayer.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial, false);
         }
     };
 }
