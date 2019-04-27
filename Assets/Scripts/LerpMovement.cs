@@ -4,14 +4,14 @@ public class LerpMovement : MonoBehaviour
 {
     public float MovePercentagePerFrame = 0.25f;
 
-    private Rigidbody2D rb;
     private bool isMoving;
     private Vector3 difference;
     private Vector3 target;
+    private Player player;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        player = GetComponent<Player>();
     }
 
     void Update()
@@ -28,12 +28,12 @@ public class LerpMovement : MonoBehaviour
 
         if (difference.magnitude > 5)
         {
-            rb.MovePosition(target);
+            player.Move(difference.x, difference.y, false);
             StopMoving();
             return;
         }
 
-        rb.MovePosition(transform.position + difference * MovePercentagePerFrame);
+        player.Move(difference.x * MovePercentagePerFrame, difference.y * MovePercentagePerFrame, false);
     }
 
     public void StartMoving(Vector3 target)
@@ -45,5 +45,6 @@ public class LerpMovement : MonoBehaviour
     public void StopMoving()
     {
         isMoving = false;
+        player.StopMoving();
     }
 }

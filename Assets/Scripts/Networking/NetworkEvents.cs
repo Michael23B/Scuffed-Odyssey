@@ -33,6 +33,8 @@ public static class NetworkEvents
     // Send data packet to each other player in the lobby
     private static void SendToLobby(byte[] data)
     {
+        if (Client.Instance == null) return;
+
         foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
         {
             if (memberId != Client.Instance.SteamId)

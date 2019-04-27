@@ -8,11 +8,9 @@ public class Player : Unit
 
     [SerializeField] float moveSpeedModifier = 0.1f;
     public GameObject blockHitBox;
-    
-    private float dodgeCooldown = 0f;
     private GameObject blockHitBoxInstantiated;
-    private Animator animator;
     private Rigidbody2D rgb;
+    private Animator animator;
     private Vector2 velocity;
     public LerpMovement LerpMovement { get; private set; }
     public Gun Gun { get; private set; }
@@ -20,9 +18,9 @@ public class Player : Unit
     public void Initialize()
     {
         rgb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         LerpMovement = GetComponent<LerpMovement>();
         Gun = gun.GetComponent<Gun>();
+        animator = GetComponent<Animator>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
     }
@@ -32,57 +30,24 @@ public class Player : Unit
         Initialize();
     }
 
-    void Update()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (dodgeCooldown <= 0)
-            {
-                Vector2 newPos = new Vector2(rgb.position.x + horizontal * 1.5f, rgb.position.y + vertical * 1.5f);
-                rgb.MovePosition(newPos);
-                dodgeCooldown = 1f;
-            }
-            else Debug.Log("Boy is your face red");
-        }
-        else
-        {
-            if (horizontal != 0 || vertical != 0)
-            {
-                animator.SetBool("playerWalking", true);
-                Vector2 newPos = new Vector2(rgb.position.x + horizontal * moveSpeedModifier, rgb.position.y + vertical * moveSpeedModifier);
-                rgb.MovePosition(newPos);
-            }
-            else animator.SetBool("playerWalking", false);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                FireGun(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), false);
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                FireGun(bulletSpawn.transform.position, Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y)), true);
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                blockHitBoxInstantiated.SetActive(false);
-            }
-            else if (Input.GetKey(KeyCode.LeftShift))
-            {
-                blockHitBoxInstantiated.SetActive(true);
-                blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + (Vector2)transform.position);
-            }
-        }
-
-        if (dodgeCooldown > 0)
-            dodgeCooldown -= Time.deltaTime;
-    }
-
     override public void HandleDamamge(GameObject bullet)
     {
         health -= bullet.GetComponent<Bullet>().bulletDmg;
         Destroy(bullet);
+    }
+
+    public void Move(float x, float y, bool applyMoveSpeed = true)
+    {
+        animator.SetBool("playerWalking", true);
+
+        float modifier = applyMoveSpeed ? moveSpeedModifier : 1;
+        Vector2 newPos = new Vector2(rgb.position.x + x * modifier, rgb.position.y + y * modifier);
+        rgb.MovePosition(newPos);
+    }
+
+    public void StopMoving()
+    {
+        animator.SetBool("playerWalking", false);
     }
 
     public void FireGun(Vector2 origin, Vector2 target, bool isSpecial, bool fireEvent = true)
@@ -91,6 +56,15 @@ public class Player : Unit
         if (fireEvent)
         {
             NetworkEvents.SendPlayerFired(origin, target, isSpecial);
+        }
+    }
+
+    public void Block(bool active)
+    {
+        blockHitBoxInstantiated.SetActive(active);
+        if (active)
+        {
+            blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + (Vector2)transform.position);
         }
     }
 }

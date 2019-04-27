@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4826578926114123294}
   - component: {fileID: 6917647534144319860}
   - component: {fileID: 1286413840}
+  - component: {fileID: 1066185079482583588}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -212,6 +213,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovePercentagePerFrame: 0.25
+--- !u!114 &1066185079482583588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704212473666625940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e92881af965f6489836bf1be56630a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3188865638924138492
 PrefabInstance:
   m_ObjectHideFlags: 0
