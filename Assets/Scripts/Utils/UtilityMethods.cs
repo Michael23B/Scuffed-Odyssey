@@ -14,6 +14,14 @@ public static class UtilityMethods
         return me;
     }
 
+    public static byte[] PrependByteArray(this byte[] a, byte b)
+    {
+        byte[] result = new byte[a.Length + 1];
+        result[0] = b;
+        a.CopyTo(result, 1);
+        return result;
+    }
+
     // Initializes every element of an array to the provided value
     public static T[] InitializeArray<T>(this T[] arr, T value)
     {

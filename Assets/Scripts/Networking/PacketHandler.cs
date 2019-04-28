@@ -1,68 +1,37 @@
 ﻿using System;
-using System.Text;
-using UnityEngine;
+using FlatBuffers;
+using PacketType = Constants.PacketType;
 
 public static class PacketHandler
 {
     // Deserializes a packet and calls the appropriate NetworkEvent method
-    public static void HandlePacket(ulong steamid, byte[] bytes, int length)
+    public static void HandlePacket(ulong steamid, byte[] bytes)
     {
-        string buffer = Encoding.UTF8.GetString(bytes, 0, length);
-
-        // properties[0] == packet type
-        // properties[1-9] == values
-        string[] properties = buffer.Split(Constants.NetworkPacketDelimiter);
-
-        // Check that packet contains valid packet type
-        if (!int.TryParse(properties[0], out var packetType))
+        // Packet type is the first byte of the packet
+        PacketType packetType = (PacketType)bytes[0];
+        // The remaining bytes are data
+        ByteBuffer buffer = new ByteBuffer(1);
+        if (bytes.Length > 1)
         {
-            return;
+            byte[] data = new byte[bytes.Length - 1];
+            Array.Copy(bytes, 1, data, 0, data.Length);
+            buffer = new ByteBuffer(data);
         }
 
-        // Call network event based on packet type
+        // Construct class from data and call network event based on packet type
         switch (packetType)
         {
-            case (int)Constants.PacketType.PlayerPosition:
-                NetworkEvents.OnPlayerPosition(new PlayerPositionEventArgs(
-                    steamid,
-                    float.Parse(properties[1]),
-                    float.Parse(properties[2])
-                    )
-                );
+            case PacketType.PlayerPosition:
+                NetworkEvents.OnUnitPosition(steamid, UnitPosition.GetRootAsUnitPosition(buffer));
                 break;
-            case (int)Constants.PacketType.PlayerSpawned:
-                NetworkEvents.OnPlayerSpawn(new PlayerSpawnedEventArgs(steamid));
+            case PacketType.PlayerSpawned:
+                NetworkEvents.OnPlayerSpawn(steamid);
                 break;
-            case (int)Constants.PacketType.PlayerFired:
-                NetworkEvents.OnPlayerFire(new PlayerFiredEventArgs(
-                    steamid,
-                    float.Parse(properties[1]),
-                    float.Parse(properties[2]), 
-                    float.Parse(properties[3]),
-                    float.Parse(properties[4]),
-                    bool.Parse(properties[5])
-                    )
-                );
+            case PacketType.PlayerFired:
+                NetworkEvents.OnUnitFire(steamid, UnitFire.GetRootAsUnitFire(buffer));
                 break;
             default:
-                throw new Exception($"Could not read packet type {properties[0]}");
+                throw new Exception($"Could not read packet type {packetType}");
         }
-    }
-
-    // Serializes arguments into {packet type}{delimiter}{value}. Example packet: 1;0.75;4;test
-    public static byte[] SerializePacket(Constants.PacketType packetType, string[] args = null)
-    {
-        StringBuilder sb = new StringBuilder($"{(int)packetType}");
-
-        if (args != null)
-        {
-            foreach (string str in args)
-            {
-                sb.Append(Constants.NetworkPacketDelimiter);
-                sb.Append(str);
-            }
-        }
-        
-        return Encoding.UTF8.GetBytes(sb.ToString());
     }
 }

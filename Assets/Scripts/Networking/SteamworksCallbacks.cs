@@ -66,6 +66,6 @@ public static class SteamworksCallbacks
 
     private static readonly Networking.OnRecievedP2PData OnP2PData = (steamid, bytes, length, channel) =>
     {
-        PacketHandler.HandlePacket(steamid, bytes, length);
+        PacketHandler.HandlePacket(steamid, bytes);
     };
 }

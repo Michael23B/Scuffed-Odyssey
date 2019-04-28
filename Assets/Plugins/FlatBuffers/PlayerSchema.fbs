@@ -1,0 +1,12 @@
+﻿table UnitPosition {
+	x:float;
+	y:float;
+}
+
+table UnitFire {
+	x:float;
+	y:float;	
+	mouseX:float;
+	mouseY:float;
+	isSpecial:bool;
+}

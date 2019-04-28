@@ -2,7 +2,7 @@
 {
     public static char NetworkPacketDelimiter = ';';
 
-    public enum PacketType
+    public enum PacketType: byte
     {
         PlayerPosition,
         PlayerSpawned,

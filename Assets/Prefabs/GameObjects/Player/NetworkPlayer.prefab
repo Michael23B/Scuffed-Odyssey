@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPlayerScripts:
-  - {fileID: 7682655810410358889}
+  - {fileID: 1066185079482583588}
   - {fileID: 6917647534144319860}
 --- !u!114 &6917647534144319860
 MonoBehaviour:
