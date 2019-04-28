@@ -67,4 +67,17 @@ public class Player : Unit
             blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + (Vector2)transform.position);
         }
     }
+
+    public void RotateGun(float mouseX, float mouseY)
+    {
+        // Distance from camera to object.  We need this to get the proper calculation.
+        float camDis = Camera.main.transform.position.y - gun.gameObject.transform.position.y;
+
+        // Get the mouse position in world space. Using camDis for the Z axis.
+        Vector3 mouse = Camera.main.ScreenToWorldPoint(new Vector3(mouseX, mouseY, camDis));
+        //gameObject.transform.LookAt(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+
+        Vector3 target = new Vector3(mouse.x, mouse.y, 0);
+        gun.transform.right = target - transform.position;
+    }
 }

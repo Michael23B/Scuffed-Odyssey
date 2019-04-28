@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254430942245582449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4638630760527907958}
@@ -124,11 +124,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1869565657479281328}
     m_Modifications:
-    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
-        type: 3}
-      propertyPath: m_Name
-      value: BulletSpawn
-      objectReference: {fileID: 0}
     - target: {fileID: 291763146179233676, guid: 7ac7691c55ca92649896438dbeb58a6c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -183,6 +178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 860661075544981822, guid: 7ac7691c55ca92649896438dbeb58a6c,
+        type: 3}
+      propertyPath: m_Name
+      value: BulletSpawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac7691c55ca92649896438dbeb58a6c, type: 3}

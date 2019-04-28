@@ -58,5 +58,6 @@ public class PlayerInput : MonoBehaviour
         {
             dodgeCooldown -= Time.deltaTime;
         }
+        player.RotateGun(Input.mousePosition.x, Input.mousePosition.y);
     }
 }
