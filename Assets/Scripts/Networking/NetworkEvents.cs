@@ -9,12 +9,6 @@ public static class NetworkEvents
 
     public static void SendPlayerPosition(float x, float y)
     {
-        // Temporary code to test movement lerping
-        if (GameData.Instance.DummyNetworkPlayer != null)
-        {
-            GameData.Instance.DummyNetworkPlayer.Player.LerpMovement.StartMoving(new Vector2(x + 1, y + 1));
-        }
-
         // Write data
         Fbb.Clear();
         var unit = UnitPosition.CreateUnitPosition(Fbb, x, y);
@@ -47,6 +41,9 @@ public static class NetworkEvents
     private static void SendToLobby(byte[] data)
     {
         if (Client.Instance == null) return;
+
+        // Test this packet on the test network player (123) if it exists
+        PacketHandler.HandlePacket(123, data);
 
         foreach (var memberId in Client.Instance.Lobby.GetMemberIDs())
         {

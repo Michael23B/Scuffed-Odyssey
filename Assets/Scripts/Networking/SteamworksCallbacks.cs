@@ -21,6 +21,8 @@ public static class SteamworksCallbacks
             if (!GameData.Instance.LocalPlayer)
             {
                 GameData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
+                // Temporary code for testing networking events
+//                GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, 123));
             }
         }
     };
