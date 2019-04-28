@@ -30,6 +30,9 @@ public static class PacketHandler
             case PacketType.PlayerFired:
                 NetworkEvents.OnUnitFire(steamid, UnitFire.GetRootAsUnitFire(buffer));
                 break;
+            case PacketType.PlayerDeflected:
+                NetworkEvents.OnUnitDeflect(steamid, UnitDeflect.GetRootAsUnitDeflect(buffer));
+                break;
             default:
                 throw new Exception($"Could not read packet type {packetType}");
         }

@@ -59,12 +59,17 @@ public class Player : Unit
         }
     }
 
-    public void Block(bool active)
+    public void Block(bool active, bool fireEvent = true)
     {
         blockHitBoxInstantiated.SetActive(active);
         if (active)
         {
             blockHitBoxInstantiated.GetComponent<Rigidbody2D>().MovePosition(new Vector2(2, 0) + (Vector2)transform.position);
+        }
+
+        if (fireEvent)
+        {
+            NetworkEvents.SendPlayerDeflected(active);
         }
     }
 }

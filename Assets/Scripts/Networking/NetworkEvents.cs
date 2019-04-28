@@ -37,6 +37,18 @@ public static class NetworkEvents
         SendToLobby(data);
     }
 
+    public static void SendPlayerDeflected(bool active)
+    {
+        // Write data
+        Fbb.Clear();
+        var unit = UnitDeflect.CreateUnitDeflect(Fbb, active);
+        Fbb.Finish(unit.Value);
+        // Add packet type byte to start of data
+        byte[] data = Fbb.SizedByteArray().PrependByteArray((byte)Constants.PacketType.PlayerDeflected);
+
+        SendToLobby(data);
+    }
+
     // Send data packet to each other player in the lobby
     private static void SendToLobby(byte[] data)
     {
@@ -80,6 +92,16 @@ public static class NetworkEvents
         if (senderPlayer)
         {
             senderPlayer.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial, false);
+        }
+    };
+
+    public static Action<ulong, UnitDeflect> OnUnitDeflect = (steamId, args) =>
+    {
+        var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == steamId);
+
+        if (senderPlayer)
+        {
+            senderPlayer.Player.Block(args.Active, false);
         }
     };
 }

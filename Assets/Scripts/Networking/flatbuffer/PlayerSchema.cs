@@ -77,3 +77,29 @@ public struct UnitFire : IFlatbufferObject
   }
 };
 
+public struct UnitDeflect : IFlatbufferObject
+{
+  private Table __p;
+  public ByteBuffer ByteBuffer { get { return __p.bb; } }
+  public static UnitDeflect GetRootAsUnitDeflect(ByteBuffer _bb) { return GetRootAsUnitDeflect(_bb, new UnitDeflect()); }
+  public static UnitDeflect GetRootAsUnitDeflect(ByteBuffer _bb, UnitDeflect obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
+  public UnitDeflect __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+
+  public bool Active { get { int o = __p.__offset(4); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
+
+  public static Offset<UnitDeflect> CreateUnitDeflect(FlatBufferBuilder builder,
+      bool active = false) {
+    builder.StartObject(1);
+    UnitDeflect.AddActive(builder, active);
+    return UnitDeflect.EndUnitDeflect(builder);
+  }
+
+  public static void StartUnitDeflect(FlatBufferBuilder builder) { builder.StartObject(1); }
+  public static void AddActive(FlatBufferBuilder builder, bool active) { builder.AddBool(0, active, false); }
+  public static Offset<UnitDeflect> EndUnitDeflect(FlatBufferBuilder builder) {
+    int o = builder.EndObject();
+    return new Offset<UnitDeflect>(o);
+  }
+};
+

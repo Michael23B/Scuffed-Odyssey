@@ -30,4 +30,10 @@ public class UIMethods : MonoBehaviour
         Client.Instance.Lobby.Leave();
         Debug.Log("Left Lobby");
     }
+
+    public void CreateDummyNetworkTest()
+    {
+        GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, 123));
+        Debug.Log("Created network test dummy. Copies the inputs you send to other clients and displays them to you.");
+    }
 }

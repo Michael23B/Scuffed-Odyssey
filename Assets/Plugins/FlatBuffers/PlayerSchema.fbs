@@ -10,3 +10,7 @@ table UnitFire {
 	mouseY:float;
 	isSpecial:bool;
 }
+
+table UnitDeflect {
+	active:bool;
+}

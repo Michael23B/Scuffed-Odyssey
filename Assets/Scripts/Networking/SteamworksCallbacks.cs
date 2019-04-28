@@ -12,6 +12,11 @@ public static class SteamworksCallbacks
         Client.Instance.Networking.OnP2PData = OnP2PData;
     }
 
+    private static readonly Networking.OnRecievedP2PData OnP2PData = (steamid, bytes, length, channel) =>
+    {
+        PacketHandler.HandlePacket(steamid, bytes);
+    };
+
     private static readonly Action<bool> OnLobbyCreated = (success) =>
     {
         Debug.Log($"Lobby Created? {success}");
@@ -21,8 +26,6 @@ public static class SteamworksCallbacks
             if (!GameData.Instance.LocalPlayer)
             {
                 GameData.Instance.LocalPlayer = NetworkPlayer.CreateNetworkPlayer(true, Client.Instance.SteamId);
-                // Temporary code for testing networking events
-//                GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, 123));
             }
         }
     };
@@ -64,10 +67,5 @@ public static class SteamworksCallbacks
                 Debug.Log($"Found Lobby: {lobby.Name}");
             }
         }
-    };
-
-    private static readonly Networking.OnRecievedP2PData OnP2PData = (steamid, bytes, length, channel) =>
-    {
-        PacketHandler.HandlePacket(steamid, bytes);
     };
 }
