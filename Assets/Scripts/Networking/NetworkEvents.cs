@@ -72,36 +72,36 @@ public static class NetworkEvents
      */
     public static Action<ulong, UnitPosition> OnUnitPosition = (steamId, args) =>
     {
-        var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == steamId);
+        GameData.Instance.ClientPlayers.TryGetValue(steamId, out var sender);
 
-        if (senderPlayer)
+        if (sender)
         {
-            senderPlayer.Player.LerpMovement.StartMoving(new Vector2(args.X, args.Y));
+            sender.Player.LerpMovement.StartMoving(new Vector2(args.X, args.Y));
         }
     };
 
     public static Action<ulong> OnPlayerSpawn = (steamId) =>
     {
-        GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, steamId));
+        GameData.Instance.ClientPlayers[123] = NetworkPlayer.CreateNetworkPlayer(false, steamId);
     };
 
     public static Action<ulong, UnitFire> OnUnitFire = (steamId, args) =>
     {
-        var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == steamId);
+        GameData.Instance.ClientPlayers.TryGetValue(steamId, out var sender);
 
-        if (senderPlayer)
+        if (sender)
         {
-            senderPlayer.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial, false);
+            sender.Player.FireGun(new Vector2(args.X, args.Y), new Vector2(args.MouseX, args.MouseY), args.IsSpecial, false);
         }
     };
 
     public static Action<ulong, UnitDeflect> OnUnitDeflect = (steamId, args) =>
     {
-        var senderPlayer = GameData.Instance.ClientPlayers.Find(player => player.PlayerId == steamId);
+        GameData.Instance.ClientPlayers.TryGetValue(steamId, out var sender);
 
-        if (senderPlayer)
+        if (sender)
         {
-            senderPlayer.Player.Block(args.Active, false);
+            sender.Player.Block(args.Active, false);
         }
     };
 }

@@ -33,7 +33,7 @@ public class UIMethods : MonoBehaviour
 
     public void CreateDummyNetworkTest()
     {
-        GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, 123));
+        GameData.Instance.ClientPlayers[123] = NetworkPlayer.CreateNetworkPlayer(false, 123);
         Debug.Log("Created network test dummy. Copies the inputs you send to other clients and displays them to you.");
     }
 }

@@ -47,7 +47,7 @@ public static class SteamworksCallbacks
             {
                 if (memberId != Client.Instance.SteamId)
                 {
-                    GameData.Instance.ClientPlayers.Add(NetworkPlayer.CreateNetworkPlayer(false, memberId));
+                    GameData.Instance.ClientPlayers[123] = NetworkPlayer.CreateNetworkPlayer(false, memberId);
                 }
             }
 

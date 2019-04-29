@@ -6,7 +6,7 @@ public class GameData : MonoBehaviour
     public static GameData Instance { get; private set; }
 
     public NetworkPlayer LocalPlayer { get; set; }
-    public List<NetworkPlayer> ClientPlayers { get; set; } = new List<NetworkPlayer>();
+    public Dictionary<ulong, NetworkPlayer> ClientPlayers { get; set; } = new Dictionary<ulong, NetworkPlayer>();
 
     private void Awake()
     {
