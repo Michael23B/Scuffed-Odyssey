@@ -7,11 +7,11 @@ public class LerpMovement : MonoBehaviour
     private bool isMoving;
     private Vector3 difference;
     private Vector3 target;
-    private Player player;
+    private Unit unit;
 
     void Awake()
     {
-        player = GetComponent<Player>();
+        unit = GetComponent<Unit>();
     }
 
     void Update()
@@ -28,12 +28,12 @@ public class LerpMovement : MonoBehaviour
 
         if (difference.magnitude > 5)
         {
-            player.Move(difference.x, difference.y, false);
+            unit.Move(difference.x, difference.y, false);
             StopMoving();
             return;
         }
 
-        player.Move(difference.x * MovePercentagePerFrame, difference.y * MovePercentagePerFrame, false);
+        unit.Move(difference.x * MovePercentagePerFrame, difference.y * MovePercentagePerFrame, false);
     }
 
     public void StartMoving(Vector3 target)
@@ -45,6 +45,6 @@ public class LerpMovement : MonoBehaviour
     public void StopMoving()
     {
         isMoving = false;
-        player.StopMoving();
+        unit.StopMoving();
     }
 }

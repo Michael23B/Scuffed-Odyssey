@@ -30,22 +30,22 @@ public class Player : Unit
         Initialize();
     }
 
-    override public void HandleDamamge(GameObject bullet)
+    public override void HandleDamamge(GameObject bullet)
     {
         health -= bullet.GetComponent<Bullet>().bulletDmg;
         Destroy(bullet);
     }
 
-    public void Move(float x, float y, bool applyMoveSpeed = true)
+    public override void Move(float x, float y, bool applyMovementSpeed = true)
     {
         animator.SetBool("playerWalking", true);
 
-        float modifier = applyMoveSpeed ? moveSpeedModifier : 1;
+        float modifier = applyMovementSpeed ? moveSpeedModifier : 1;
         Vector2 newPos = new Vector2(rgb.position.x + x * modifier, rgb.position.y + y * modifier);
         rgb.MovePosition(newPos);
     }
 
-    public void StopMoving()
+    public override void StopMoving()
     {
         animator.SetBool("playerWalking", false);
     }

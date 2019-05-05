@@ -52,6 +52,16 @@ public class PracticeDummy : Unit
         Destroy(incomingBullet);
     }
 
+    public override void Move(float x, float y, bool applyMovementSpeed = true)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void StopMoving()
+    {
+        throw new System.NotImplementedException();
+    }
+
     private void FireBullet(Vector2 origin, Vector2 target)
     {
         Vector2 direction = target - origin;
