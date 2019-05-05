@@ -36,4 +36,11 @@ public class UIMethods : MonoBehaviour
         GameData.Instance.ClientPlayers[123] = NetworkPlayer.CreateNetworkPlayer(false, 123);
         Debug.Log("Created network test dummy. Copies the inputs you send to other clients and displays them to you.");
     }
+
+    public void CreateNetworkEnemy()
+    {
+        Enemy enemy = Enemy.CreateEnemy();
+        NetworkEvents.SendEnemySpawned(enemy);
+        Debug.Log("Created enemy in this lobby.");
+    }
 }

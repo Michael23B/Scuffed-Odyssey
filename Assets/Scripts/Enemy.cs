@@ -8,12 +8,19 @@ public class Enemy : Unit
     private LerpMovement lerpMovement;
     private Rigidbody2D rgb;
 
-    private void Start()
+    public override void Initialize(int overrideId = 0)
     {
         rgb = GetComponent<Rigidbody2D>();
         lerpMovement = GetComponent<LerpMovement>();
         coroutineWait = new WaitForSeconds(timeBetweenMovementUpdates);
         StartCoroutine(MovementCoroutine());
+
+        Id = overrideId != 0 ? overrideId : GetInstanceID();
+    }
+
+    private void Start()
+    {
+        Initialize();
     }
 
     public override void HandleDamamge(GameObject bullet)
@@ -30,6 +37,15 @@ public class Enemy : Unit
 
     public override void StopMoving()
     {
+    }
+
+    public static Enemy CreateEnemy(int overrideId = 0)
+    {
+        GameObject enemyGO = Instantiate(PrefabHelper.Instance.EnemyPrefab);
+        Enemy enemy = enemyGO.GetComponent<Enemy>();
+        enemy.Initialize(overrideId);
+
+        return enemy;
     }
 
     IEnumerator MovementCoroutine()

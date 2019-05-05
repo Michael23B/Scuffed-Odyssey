@@ -1,9 +1,12 @@
-﻿table UnitPosition {
+﻿enum UnitType:byte { Player = 1, Enemy }
+
+table UnitPosition {
 	x:float;
 	y:float;
 }
 
 table UnitFire {
+	unitType:UnitType = Player;
 	x:float;
 	y:float;	
 	mouseX:float;
@@ -13,4 +16,11 @@ table UnitFire {
 
 table UnitDeflect {
 	active:bool;
+}
+
+table UnitSpawned {
+	unitType: UnitType = Player;
+	id:int;
+	x:float;
+	y:float;
 }

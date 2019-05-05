@@ -32,6 +32,11 @@ public class PracticeDummy : Unit
         }
     }
 
+    public override void Initialize(int overrideId = 0)
+    {
+        throw new System.NotImplementedException();
+    }
+
     override public void HandleDamamge(GameObject incomingBullet)
     {
         Bullet bulletInstance = incomingBullet.GetComponent<Bullet>();

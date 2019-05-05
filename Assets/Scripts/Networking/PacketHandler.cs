@@ -27,11 +27,14 @@ public static class PacketHandler
             case PacketType.PlayerSpawned:
                 NetworkEvents.OnPlayerSpawn(steamid);
                 break;
-            case PacketType.PlayerFired:
+            case PacketType.UnitFired:
                 NetworkEvents.OnUnitFire(steamid, UnitFire.GetRootAsUnitFire(buffer));
                 break;
             case PacketType.PlayerDeflected:
                 NetworkEvents.OnUnitDeflect(steamid, UnitDeflect.GetRootAsUnitDeflect(buffer));
+                break;
+            case PacketType.UnitSpawned:
+                NetworkEvents.OnUnitSpawned(steamid, UnitSpawned.GetRootAsUnitSpawned(buffer));
                 break;
             default:
                 throw new Exception($"Could not read packet type {packetType}");

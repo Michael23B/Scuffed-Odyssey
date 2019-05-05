@@ -5,6 +5,12 @@
 using global::System;
 using global::FlatBuffers;
 
+public enum UnitType : sbyte
+{
+ Player = 1,
+ Enemy = 2,
+};
+
 public struct UnitPosition : IFlatbufferObject
 {
   private Table __p;
@@ -44,33 +50,37 @@ public struct UnitFire : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public UnitFire __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public float X { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
-  public float Y { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
-  public float MouseX { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
-  public float MouseY { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
-  public bool IsSpecial { get { int o = __p.__offset(12); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
+  public UnitType UnitType { get { int o = __p.__offset(4); return o != 0 ? (UnitType)__p.bb.GetSbyte(o + __p.bb_pos) : UnitType.Player; } }
+  public float X { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public float Y { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public float MouseX { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public float MouseY { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public bool IsSpecial { get { int o = __p.__offset(14); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
 
   public static Offset<UnitFire> CreateUnitFire(FlatBufferBuilder builder,
+      UnitType unitType = UnitType.Player,
       float x = 0.0f,
       float y = 0.0f,
       float mouseX = 0.0f,
       float mouseY = 0.0f,
       bool isSpecial = false) {
-    builder.StartObject(5);
+    builder.StartObject(6);
     UnitFire.AddMouseY(builder, mouseY);
     UnitFire.AddMouseX(builder, mouseX);
     UnitFire.AddY(builder, y);
     UnitFire.AddX(builder, x);
     UnitFire.AddIsSpecial(builder, isSpecial);
+    UnitFire.AddUnitType(builder, unitType);
     return UnitFire.EndUnitFire(builder);
   }
 
-  public static void StartUnitFire(FlatBufferBuilder builder) { builder.StartObject(5); }
-  public static void AddX(FlatBufferBuilder builder, float x) { builder.AddFloat(0, x, 0.0f); }
-  public static void AddY(FlatBufferBuilder builder, float y) { builder.AddFloat(1, y, 0.0f); }
-  public static void AddMouseX(FlatBufferBuilder builder, float mouseX) { builder.AddFloat(2, mouseX, 0.0f); }
-  public static void AddMouseY(FlatBufferBuilder builder, float mouseY) { builder.AddFloat(3, mouseY, 0.0f); }
-  public static void AddIsSpecial(FlatBufferBuilder builder, bool isSpecial) { builder.AddBool(4, isSpecial, false); }
+  public static void StartUnitFire(FlatBufferBuilder builder) { builder.StartObject(6); }
+  public static void AddUnitType(FlatBufferBuilder builder, UnitType unitType) { builder.AddSbyte(0, (sbyte)unitType, 1); }
+  public static void AddX(FlatBufferBuilder builder, float x) { builder.AddFloat(1, x, 0.0f); }
+  public static void AddY(FlatBufferBuilder builder, float y) { builder.AddFloat(2, y, 0.0f); }
+  public static void AddMouseX(FlatBufferBuilder builder, float mouseX) { builder.AddFloat(3, mouseX, 0.0f); }
+  public static void AddMouseY(FlatBufferBuilder builder, float mouseY) { builder.AddFloat(4, mouseY, 0.0f); }
+  public static void AddIsSpecial(FlatBufferBuilder builder, bool isSpecial) { builder.AddBool(5, isSpecial, false); }
   public static Offset<UnitFire> EndUnitFire(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<UnitFire>(o);
@@ -100,6 +110,44 @@ public struct UnitDeflect : IFlatbufferObject
   public static Offset<UnitDeflect> EndUnitDeflect(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<UnitDeflect>(o);
+  }
+};
+
+public struct UnitSpawned : IFlatbufferObject
+{
+  private Table __p;
+  public ByteBuffer ByteBuffer { get { return __p.bb; } }
+  public static UnitSpawned GetRootAsUnitSpawned(ByteBuffer _bb) { return GetRootAsUnitSpawned(_bb, new UnitSpawned()); }
+  public static UnitSpawned GetRootAsUnitSpawned(ByteBuffer _bb, UnitSpawned obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
+  public UnitSpawned __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+
+  public UnitType UnitType { get { int o = __p.__offset(4); return o != 0 ? (UnitType)__p.bb.GetSbyte(o + __p.bb_pos) : UnitType.Player; } }
+  public int Id { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public float X { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public float Y { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+
+  public static Offset<UnitSpawned> CreateUnitSpawned(FlatBufferBuilder builder,
+      UnitType unitType = UnitType.Player,
+      int id = 0,
+      float x = 0.0f,
+      float y = 0.0f) {
+    builder.StartObject(4);
+    UnitSpawned.AddY(builder, y);
+    UnitSpawned.AddX(builder, x);
+    UnitSpawned.AddId(builder, id);
+    UnitSpawned.AddUnitType(builder, unitType);
+    return UnitSpawned.EndUnitSpawned(builder);
+  }
+
+  public static void StartUnitSpawned(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void AddUnitType(FlatBufferBuilder builder, UnitType unitType) { builder.AddSbyte(0, (sbyte)unitType, 1); }
+  public static void AddId(FlatBufferBuilder builder, int id) { builder.AddInt(1, id, 0); }
+  public static void AddX(FlatBufferBuilder builder, float x) { builder.AddFloat(2, x, 0.0f); }
+  public static void AddY(FlatBufferBuilder builder, float y) { builder.AddFloat(3, y, 0.0f); }
+  public static Offset<UnitSpawned> EndUnitSpawned(FlatBufferBuilder builder) {
+    int o = builder.EndObject();
+    return new Offset<UnitSpawned>(o);
   }
 };
 

@@ -15,7 +15,7 @@ public class Player : Unit
     public LerpMovement LerpMovement { get; private set; }
     public Gun Gun { get; private set; }
 
-    public void Initialize()
+    public override void Initialize(int overrideId = 0)
     {
         rgb = GetComponent<Rigidbody2D>();
         LerpMovement = GetComponent<LerpMovement>();
@@ -23,6 +23,8 @@ public class Player : Unit
         animator = GetComponent<Animator>();
         blockHitBoxInstantiated = Instantiate(blockHitBox, rgb.position, Quaternion.identity);
         blockHitBoxInstantiated.SetActive(false);
+
+        Id = overrideId != 0 ? overrideId : GetInstanceID();
     }
 
     void Start()

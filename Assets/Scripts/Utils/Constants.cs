@@ -6,8 +6,9 @@
     {
         PlayerPosition,
         PlayerSpawned,
-        PlayerFired,
-        PlayerDeflected
+        UnitFired,
+        PlayerDeflected,
+        UnitSpawned
     }
 }
 

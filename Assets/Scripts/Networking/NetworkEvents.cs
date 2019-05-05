@@ -7,6 +7,7 @@ public static class NetworkEvents
 {
     static readonly FlatBufferBuilder Fbb = new FlatBufferBuilder(1);
 
+    // TODO refactor to unit position
     public static void SendPlayerPosition(float x, float y)
     {
         // Write data
@@ -21,6 +22,7 @@ public static class NetworkEvents
 
     public static void SendPlayerSpawned()
     {
+        // TODO refactor into unit spawned
         byte[] data = {(byte) Constants.PacketType.PlayerSpawned};
         SendToLobby(data);
     }
@@ -29,10 +31,10 @@ public static class NetworkEvents
     {
         // Write data
         Fbb.Clear();
-        var unit = UnitFire.CreateUnitFire(Fbb, origin.x, origin.y, target.x, target.y, isSpecial);
+        var unit = UnitFire.CreateUnitFire(Fbb, UnitType.Player, origin.x, origin.y, target.x, target.y, isSpecial);
         Fbb.Finish(unit.Value);
         // Add packet type byte to start of data
-        byte[] data = Fbb.SizedByteArray().PrependByteArray((byte)Constants.PacketType.PlayerFired);
+        byte[] data = Fbb.SizedByteArray().PrependByteArray((byte)Constants.PacketType.UnitFired);
 
         SendToLobby(data);
     }
@@ -45,6 +47,18 @@ public static class NetworkEvents
         Fbb.Finish(unit.Value);
         // Add packet type byte to start of data
         byte[] data = Fbb.SizedByteArray().PrependByteArray((byte)Constants.PacketType.PlayerDeflected);
+
+        SendToLobby(data);
+    }
+
+    public static void SendEnemySpawned(Enemy enemy)
+    {
+        // Write data
+        Fbb.Clear();
+        var unit = UnitSpawned.CreateUnitSpawned(Fbb, UnitType.Enemy, enemy.Id, enemy.transform.position.x, enemy.transform.position.y);
+        Fbb.Finish(unit.Value);
+        // Add packet type byte to start of data
+        byte[] data = Fbb.SizedByteArray().PrependByteArray((byte)Constants.PacketType.UnitSpawned);
 
         SendToLobby(data);
     }
@@ -80,6 +94,7 @@ public static class NetworkEvents
         }
     };
 
+    // TODO refactor into unit spawned
     public static Action<ulong> OnPlayerSpawn = (steamId) =>
     {
         GameData.Instance.ClientPlayers[123] = NetworkPlayer.CreateNetworkPlayer(false, steamId);
@@ -103,5 +118,11 @@ public static class NetworkEvents
         {
             sender.Player.Block(args.Active, false);
         }
+    };
+
+    public static Action<ulong, UnitSpawned> OnUnitSpawned = (steamId, args) =>
+    {
+        Enemy enemy = Enemy.CreateEnemy(args.Id);
+        enemy.transform.position = new Vector2(args.X, args.Y);
     };
 }
